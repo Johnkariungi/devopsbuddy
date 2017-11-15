@@ -1,5 +1,6 @@
 $( document ).ready( main );
 
+/* display image text about on click details */
 function main () {
 	
 	$('btn-collapse').click(function (e) {
