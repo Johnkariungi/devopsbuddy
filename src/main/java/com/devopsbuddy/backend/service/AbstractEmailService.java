@@ -7,7 +7,7 @@ import com.devopsbuddy.web.domain.fontend.FeedbackPojo;
 
 public abstract class AbstractEmailService implements EmailService {
 
-	@Value("$(default.to.address)") /*added in the application.properties file*/
+	@Value("${default.to.address}") /*added in the application.properties file*/
 	private String defaultToAddress;
 	
 	/**
