@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 public class FeedbackPojo implements Serializable {
 	
-	private static final  long serialVersionUID = 1L;
+	private static final  long serialVersionUID = 1L;/* always valid not persistent to disk*/
 	
 	private String email;
 	private String firstName;
@@ -36,7 +36,7 @@ public class FeedbackPojo implements Serializable {
 		this.feedback = feedback;
 	}
 	
-	@Override
+	@Override /*String builder is preferred because it leads to better performance*/
 	public String toString() {
 		final StringBuilder builder = new StringBuilder();
 		builder.append("FeedbackPojo [email=");

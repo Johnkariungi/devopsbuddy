@@ -19,7 +19,9 @@
 
                         <h1 th:text="#{contact.h1.text}"></h1>
                         <p class="lead" th:text="#{contact.p.lead}"></p>
-
+						<!-- @{} = hyper-link, #{} = i18n property, 
+							${} = selects map within context or works in conjunction with ${} 
+								i.e feedback and email-->
                         <form id="contactForm"
                               th:action="@{/contact/}"
                               th:object="${feedback}"
