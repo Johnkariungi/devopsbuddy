@@ -23,7 +23,7 @@ public class I18NService {
      * @param messageId The key to the messages resource file
      **/
 	public String getMessage(String messageId) {
-		LOG.info("Returning i18n text messageId {}", messageId);
+		LOG.info("Returning i18n text messageId {}", messageId); /*log msg using i18n*/
 		Locale locale = LocaleContextHolder.getLocale();
 		return getMessage(messageId, locale);
 	}
