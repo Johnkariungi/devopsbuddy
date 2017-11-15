@@ -5,9 +5,9 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 
 @Configuration
-public class I18NConfig {
+public class I18NConfig { /* things to appear on the pages */
 
-	@Bean
+	@Bean /* Spring looks for the file messages.properties folder in resources/i18n*/
 	public ReloadableResourceBundleMessageSource messageSource() {
 		ReloadableResourceBundleMessageSource resourceBundleMessageSource = new ReloadableResourceBundleMessageSource();
 		resourceBundleMessageSource.setBasename("classpath:i18n/messages");
