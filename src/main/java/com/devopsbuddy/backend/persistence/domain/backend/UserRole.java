@@ -16,57 +16,58 @@ import javax.persistence.Table;
 @Entity
 @Table(name = "user_role")
 public class UserRole implements Serializable {
+
 	/** The Serial Version UID for Serializable classes. */
     private static final long serialVersionUID = 1L;
-    
-    public UserRole() {}
-    
+
+    public UserRole() {
+
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
-    
-    
+
     public UserRole(User user, Role role) {
-		super();
-		this.user = user;
-		this.role = role;
-	}
+        this.user = user;
+        this.role = role;
+    }
 
-	@Id
-    @ManyToOne(fetch = FetchType.EAGER)
+    /** EAGER may result in a stack-overflow. */
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
-    private User user;
-    
-    @Id
-    @ManyToOne
+    private User user;/** many users to one role*/
+
+
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
-    private Role role;
+    private Role role;/** many */
 
-	public long getId() {
-		return id;
-	}
+    public User getUser() {
+        return user;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public void setUser(User user) {
+        this.user = user;
+    }
 
-	public User getUser() {
-		return user;
-	}
+    public Role getRole() {
+        return role;
+    }
 
-	public void setUser(User user) {
-		this.user = user;
-	}
+    public void setRole(Role role) {
+        this.role = role;
+    }
 
-	public Role getRole() {
-		return role;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public void setRole(Role role) {
-		this.role = role;
-	}
-    
-	@Override
+    public void setId(long id) {
+        this.id = id;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -81,5 +82,4 @@ public class UserRole implements Serializable {
     public int hashCode() {
         return (int) (id ^ (id >>> 32));
     }
-    
 }

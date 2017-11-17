@@ -10,44 +10,71 @@ import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 
+import com.devopsbuddy.enums.RolesEnum;
+
 @Entity
 public class Role implements Serializable {
 	/** The Serial Version UID for Serializable classes. */
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     private int id;
-    
+
     private String name;
-    
+
     @OneToMany(mappedBy = "role", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
     private Set<UserRole> userRoles = new HashSet<>();
-    
-    private Role() {}
-    
-    /** getters and setters */ 
 
-	public int getId() {
-		return id;
-	}
+    public Role() {
 
-	public Set<UserRole> getUserRoles() {
-		return userRoles;
-	}
+    }
 
-	public void setUserRoles(Set<UserRole> userRoles) {
-		this.userRoles = userRoles;
-	}
+    /**
+     * Full constructor. 
+     * @param rolesEnum
+     */
+    public Role(RolesEnum rolesEnum) {
+        this.id = rolesEnum.getId();
+        this.name = rolesEnum.getRoleName();
+    }
 
-	public void setId(int id) {
-		this.id = id;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public void setId(int id) {
+        this.id = id;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Set<UserRole> getUserRoles() {
+        return userRoles;
+    }
+
+    public void setUserRoles(Set<UserRole> userRoles) {
+        this.userRoles = userRoles;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Role role = (Role) o;
+
+        return id == role.id;
+
+    }
+
+    @Override
+    public int hashCode() {
+        return id;
+    }
 }

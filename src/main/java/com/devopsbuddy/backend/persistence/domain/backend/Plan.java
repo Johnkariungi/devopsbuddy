@@ -16,7 +16,7 @@ public class Plan implements Serializable {
 	private String name;
 
 	/** Default constructor. */
-	private Plan() {}
+	public Plan() {}
 
 	/** getters and setters */
 	public int getId() {
