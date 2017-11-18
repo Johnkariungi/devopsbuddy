@@ -60,12 +60,11 @@ public class User implements Serializable {
 
     private boolean enabled;
 
-    @ManyToOne(fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)/* many users with the same plan */
     @JoinColumn(name = "plan_id")
     private Plan plan;
 
-
-
+    /**each user, many roles using a set to avoid duplicates, cascade all when user is deleted. */
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<UserRole> userRoles = new HashSet<>();
 

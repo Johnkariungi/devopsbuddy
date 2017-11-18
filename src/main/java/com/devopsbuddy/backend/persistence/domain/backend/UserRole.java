@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "user_role")
+@Table(name = "user_role") /*we don't use the default name created automatically*/
 public class UserRole implements Serializable {
 
 	/** The Serial Version UID for Serializable classes. */
@@ -34,14 +34,14 @@ public class UserRole implements Serializable {
     }
 
     /** EAGER may result in a stack-overflow. */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY) /*many to one from the user_role table - many userId's linked 2 single role*/
     @JoinColumn(name = "user_id")
     private User user;/** many users to one role*/
 
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "role_id")
-    private Role role;/** many */
+    private Role role;/** many roles linked to a single id */
 
     public User getUser() {
         return user;
