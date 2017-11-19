@@ -47,7 +47,8 @@ public class RepositoriesIntergrationTest {
 		//Plan basicPlan = createPlan(PlansEnum.BASIC);
 		Plan basicPlan = createBasicPlan();
 		planRepository.save(basicPlan);
-		Plan retrivedPlan = planRepository.findOne(BASIC_PLAN_ID);
+		//Plan retrivedPlan = planRepository.findOne(BASIC_PLAN_ID);
+		Plan retrivedPlan = planRepository.findOne(PlansEnum.BASIC.getId());
 		Assert.assertNotNull(retrivedPlan);
 	}
 	
