@@ -101,7 +101,7 @@ public class RepositoriesIntergrationTest {
 		Assert.assertNotNull(newlyCreatedUser.getPlan());
 		Assert.assertNotNull(newlyCreatedUser.getPlan().getId());
 		
-		Set<UserRole> newlyCreatedUserUserRoles = new HashSet<>();
+		Set<UserRole> newlyCreatedUserUserRoles = newlyCreatedUser.getUserRoles();
 		for (UserRole ur : newlyCreatedUserUserRoles) {
 			Assert.assertNotNull(ur.getRole());
 			Assert.assertNotNull(ur.getRole().getId());
