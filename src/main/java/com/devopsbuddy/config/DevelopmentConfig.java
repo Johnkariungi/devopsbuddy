@@ -22,7 +22,8 @@ public class DevelopmentConfig {
 	
 	@Bean /*add for console JPA inMemory H2 DB */
     public ServletRegistrationBean h2ConsoleServletRegistration() {
-        ServletRegistrationBean bean = new ServletRegistrationBean(new WebServlet());
+		/*start new Servlet on http://localhost:8080/console*/
+        ServletRegistrationBean bean = new ServletRegistrationBean(new WebServlet()); 
         bean.addUrlMappings("/console/*");
         return bean;
     }

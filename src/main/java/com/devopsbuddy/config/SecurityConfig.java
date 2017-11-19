@@ -51,9 +51,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+<<<<<<< HEAD
 
        /*List<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
         if (activeProfiles.contains("dev")) {
+=======
+    		/** H2 inMemory Db for dev - console to work on browser */
+    		List<String> activeProfiles = Arrays.asList(env.getActiveProfiles()); /*get the profiles*/
+        if (activeProfiles.contains("dev")) {/* disable if inMemory DB for dev*/
+>>>>>>> jpa
             http.csrf().disable();
             http.headers().frameOptions().disable();
         }*/
