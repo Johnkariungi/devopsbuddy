@@ -94,7 +94,7 @@ public class RepositoriesIntergrationTest {
 		
 		/** save the user entity. */
 		basicUser = userRepository.save(basicUser);
-		User newlyCreatedUser = userRepository.findOne(basicUser.getId()); /** user exists. */
+		User newlyCreatedUser = userRepository.findOne(basicUser.getId()); /** user exists. and not null below */
 		Assert.assertNotNull(newlyCreatedUser);
 		Assert.assertTrue(newlyCreatedUser.getId() != 0);
 		Assert.assertNotNull(newlyCreatedUser.getPlan());
