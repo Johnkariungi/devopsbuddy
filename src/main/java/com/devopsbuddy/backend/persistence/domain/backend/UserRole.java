@@ -34,12 +34,12 @@ public class UserRole implements Serializable {
     }
 
     /** EAGER may result in a stack-overflow. */
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id")
     private User user;/** many users to one role*/
 
 
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "role_id")
     private Role role;/** many */
 
