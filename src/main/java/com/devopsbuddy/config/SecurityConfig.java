@@ -18,24 +18,18 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-	/** Public URLs. */
-
-	/*@Autowired
-    private UserSecurityService userSecurityService;
-
-    @Autowired
-    private Environment env;*/
-
-    /** The encryption SALT. */
-    private static final String SALT = "fdalkjalk;3jlwf00sfaof";
-
-    @Bean
+	@Autowired
+    private Environment env;
+	
+	/** The encryption SALT. */
+   private static final String SALT = "fdalkjalk;3jlwf00sfaof";
+    
+	@Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder(12, new SecureRandom(SALT.getBytes()));
     }
-
-    /** Public URLs. */
-
+	
+	/** Public URLs. */
     private static final String[] PUBLIC_MATCHERS = {
             "/webjars/**",
             "/css/**",
@@ -45,43 +39,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/about/**",
             "/contact/**",
             "/error/**/*",
-            "/error/**/*"
-
+            "/console/**"
     };
     
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-<<<<<<< HEAD
-
-       /*List<String> activeProfiles = Arrays.asList(env.getActiveProfiles());
-        if (activeProfiles.contains("dev")) {
-=======
     		/** H2 inMemory Db for dev - console to work on browser */
     		List<String> activeProfiles = Arrays.asList(env.getActiveProfiles()); /*get the profiles*/
         if (activeProfiles.contains("dev")) {/* disable if inMemory DB for dev*/
->>>>>>> jpa
             http.csrf().disable();
             http.headers().frameOptions().disable();
-        }*/
-
-        http
-                .authorizeRequests()
-                .antMatchers(PUBLIC_MATCHERS).permitAll()
-                .anyRequest().authenticated()
-                .and()
-                .formLogin().loginPage("/login").defaultSuccessUrl("/payload")
-                .failureUrl("/login?error").permitAll()
-                .and()
-                .logout().permitAll();
-    }
-    
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth
-        		.inMemoryAuthentication()
-        		.withUser("user").password("password")
-        		.roles("USER");
-                /*.userDetailsService(userSecurityService)
-                .passwordEncoder(passwordEncoder());*/
-    }
+        }
+        
+	    	http
+	        .authorizeRequests()
+	        .antMatchers(PUBLIC_MATCHERS).permitAll()
+	        .anyRequest().authenticated()
+	        .and()
+	        .formLogin().loginPage("/login").defaultSuccessUrl("/payload")
+	        .failureUrl("/login?error").permitAll()
+	        .and()
+	        .logout().permitAll();
+	}
+	
+	@Autowired
+	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+		auth
+		.inMemoryAuthentication()
+		.withUser("user").password("password")
+		.roles("USER");
+	        //.userDetailsService(userSecurityService)
+	       // .passwordEncoder(passwordEncoder());
+	}
 }
