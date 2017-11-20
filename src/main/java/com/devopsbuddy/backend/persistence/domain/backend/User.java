@@ -1,5 +1,6 @@
 package com.devopsbuddy.backend.persistence.domain.backend;
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -15,9 +16,11 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import org.hibernate.validator.constraints.Length;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Entity
-public class User implements Serializable {
+public class User implements Serializable, UserDetails {
 	/** The Serial Version UID for Serializable classes. */
     private static final long serialVersionUID = 1L;
 
@@ -63,8 +66,6 @@ public class User implements Serializable {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "plan_id")
     private Plan plan;
-
-
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<UserRole> userRoles = new HashSet<>();
@@ -183,8 +184,6 @@ public class User implements Serializable {
         this.userRoles = userRoles;
     }
 
-
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -201,5 +200,31 @@ public class User implements Serializable {
         return (int) (id ^ (id >>> 32));
     }
 
+    /*user_details implemented methods*/
+    
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		Set<GrantedAuthority> authorities = new HashSet<>(); /*create a set of granted authorities*/
+		/*for each of the roles for the user authority set, create a role and a role name*/
+		userRoles.forEach(ur -> authorities.add(new Authority(ur.getRole().getName()))); 
+		return authorities;
+	}
+	/*not implementing the methods on account, never expire or never locked*/
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;/*change return*/
+	}
 
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;/*change return*/
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;/*change return*/
+	}
 }
