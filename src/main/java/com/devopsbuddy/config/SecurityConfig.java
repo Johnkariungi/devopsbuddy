@@ -73,7 +73,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 		/*.inMemoryAuthentication()
 		.withUser("user").password("password")
 		.roles("USER");*/
-	        .userDetailsService(userSecurityService);
-	       // .passwordEncoder(passwordEncoder());
+	        .userDetailsService(userSecurityService)
+	        .passwordEncoder(passwordEncoder());
 	}
 }

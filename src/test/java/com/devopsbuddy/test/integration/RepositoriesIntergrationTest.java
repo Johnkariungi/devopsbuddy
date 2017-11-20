@@ -67,9 +67,9 @@ public class RepositoriesIntergrationTest {
 
 	@Test
 	public void createNewUser() throws Exception {
-		User basicUser = createUser();
+		User basicUser = createUser();//UserUtils.createBasicUser();
 		
-		basicUser = userRepository.save(basicUser);
+		/*basicUser = userRepository.save(basicUser);
 		User newlyCreatedUser = userRepository.findOne(basicUser.getId());
 		Assert.assertNotNull(newlyCreatedUser);
 		Assert.assertTrue(newlyCreatedUser.getId() != 0);
@@ -81,7 +81,7 @@ public class RepositoriesIntergrationTest {
 		for (UserRole ur : newlyCreatedUserRoles) {
 			Assert.assertNotNull(ur.getRole());
 			Assert.assertNotNull(ur.getRole().getId());
-		}
+		}*/
 		
 		/** create and save a plan record. */
 		//Plan basicPlan = createBasicPlan();
@@ -117,18 +117,18 @@ public class RepositoriesIntergrationTest {
 		}
 		
 		/** save the user entity. */
-	/*	basicUser = userRepository.save(basicUser);
-		User newlyCreatedUser = userRepository.findOne(basicUser.getId());*/ /** user exists. */
-		/*Assert.assertNotNull(newlyCreatedUser);
+		basicUser = userRepository.save(basicUser);
+		User newlyCreatedUser = userRepository.findOne(basicUser.getId()); /** user exists. */
+		Assert.assertNotNull(newlyCreatedUser);
 		Assert.assertTrue(newlyCreatedUser.getId() != 0);
 		Assert.assertNotNull(newlyCreatedUser.getPlan());
-		Assert.assertNotNull(newlyCreatedUser.getPlan().getId());*/
+		Assert.assertNotNull(newlyCreatedUser.getPlan().getId());
 		
-		/*Set<UserRole> newlyCreatedUserUserRoles = new HashSet<>();
+		Set<UserRole> newlyCreatedUserUserRoles = new HashSet<>();
 		for (UserRole ur : newlyCreatedUserUserRoles) {
 			Assert.assertNotNull(ur.getRole());
 			Assert.assertNotNull(ur.getRole().getId());
-		}*/
+		}
 	}
 	
 	@Test
