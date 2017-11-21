@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -27,6 +28,16 @@ public class DevopsbuddyApplication implements CommandLineRunner {
 
 	@Autowired
 	private UserService userService;
+	
+	/** webmaster attr on application-common.properties for forgot password*/
+	@Value("${webmaster.username}")
+	private String webmasterUsername;
+
+	@Value("${webmaster.password}")
+	private String webmasterPassword;
+
+	@Value("${webmaster.email}")
+	private String webmasterEmail;
 
 	public static void main(String[] args) {
 		SpringApplication.run(DevopsbuddyApplication.class, args);
@@ -34,12 +45,12 @@ public class DevopsbuddyApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... arg0) throws Exception {
-		String username = "proUser";
-		String email = "proUser@devopsbuddy.com";
 		
-		User user = UserUtils.createBasicUser(username, email);
+		User user = UserUtils.createBasicUser(webmasterUsername, webmasterEmail);
+		user.setPassword(webmasterPassword);
+		
 		Set<UserRole> userRoles = new HashSet<>();
-		userRoles.add(new UserRole(user, new Role(RolesEnum.BASIC)));
+		userRoles.add(new UserRole(user, new Role(RolesEnum.ADMIN)));
 		LOG.debug("creating user with username {} ", user.getUsername());
 		userService.createUser(user, PlansEnum.PRO, userRoles);
 		LOG.info("User {} created", user.getUsername());
