@@ -33,12 +33,12 @@ public class User implements Serializable, UserDetails {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
-    @Column(unique = true)
+    @Column(unique = true) // added to avoid creating duplicates
     private String username;
 
     private String password;
 
-    @Column(unique = true)
+    @Column(unique = true) // added to avoid creating duplicates
     private String email;
 
     @Column(name = "first_name")

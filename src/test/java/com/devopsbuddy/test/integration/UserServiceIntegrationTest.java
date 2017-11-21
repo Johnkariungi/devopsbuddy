@@ -30,9 +30,11 @@ public class UserServiceIntegrationTest {
 
     @Test
     public void testCreateNewUser() throws Exception {
-
+    		String username = testName.getMethodName();
+		String email = testName.getMethodName() + "@devopsbuddy.com";
+		
     		Set<UserRole> userRoles = new HashSet<>();
-    		User basicUser = UserUtils.createBasicUser();
+    		User basicUser = UserUtils.createBasicUser(username, email);
     		userRoles.add(new UserRole(basicUser, new Role(RolesEnum.BASIC)));
     		
     		User user = userService.createUser(basicUser, PlansEnum.BASIC, userRoles);
