@@ -25,9 +25,7 @@ public class User implements Serializable, UserDetails {
     private static final long serialVersionUID = 1L;
 
 
-    public User() {
-
-    }
+    public User() {}
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -66,10 +64,14 @@ public class User implements Serializable, UserDetails {
     @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "plan_id")
     private Plan plan;
+    
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.LAZY, mappedBy = "user")
+    private Set<PasswordResetToken> passwordResetToken = new HashSet<>();
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Set<UserRole> userRoles = new HashSet<>();
-
+    
+    /*getters and setters*/
     public long getId() {
         return id;
     }
@@ -182,7 +184,15 @@ public class User implements Serializable, UserDetails {
         this.userRoles = userRoles;
     }
 
-    @Override
+    public Set<PasswordResetToken> getPasswordResetToken() {
+		return passwordResetToken;
+	}
+
+	public void setPasswordResetToken(Set<PasswordResetToken> passwordResetToken) {
+		this.passwordResetToken = passwordResetToken;
+	}
+
+	@Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
