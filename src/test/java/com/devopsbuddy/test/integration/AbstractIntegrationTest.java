@@ -28,7 +28,7 @@ public abstract class AbstractIntegrationTest {
 	@Autowired
 	protected UserRepository userRepository;
 	
-	protected Plan createPlan(PlansEnum plansEnum) {
+	protected Plan createPlan(PlansEnum plansEnum) {	
 		return new Plan(plansEnum);
 	}
 	
