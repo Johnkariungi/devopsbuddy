@@ -27,8 +27,9 @@ public interface UserRepository extends CrudRepository<User, Long>{
      */
 	public User findByEmail(String email);
 	
+	@Transactional
 	@Modifying/* to the JPA engine - means the state of the database will change.*/
 	@Query("update User u set u.password = :password where u.id = :userId")
 	/* @Param are the arguments instead of ?parameter and can be passed at any order.*/
-	void updateUserPassword(@Param("user_id") long userId, @Param("password") String password); 
+	void updateUserPassword(@Param("userId") long userId, @Param("password") String password); 
 }

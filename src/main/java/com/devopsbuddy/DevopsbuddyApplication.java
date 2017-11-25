@@ -46,12 +46,15 @@ public class DevopsbuddyApplication implements CommandLineRunner {
 	@Override
 	public void run(String... arg0) throws Exception {
 		
+		//LOG.info("Creating Basic and Pro plans in the database...");
+		//planService.createPlan(PlansEnum.BASIC.getId());
+		//planService.createPlan(PlansEnum.PRO.getId());
+
 		User user = UserUtils.createBasicUser(webmasterUsername, webmasterEmail);
 		user.setPassword(webmasterPassword);
-		
 		Set<UserRole> userRoles = new HashSet<>();
 		userRoles.add(new UserRole(user, new Role(RolesEnum.ADMIN)));
-		LOG.debug("creating user with username {} ", user.getUsername());
+		LOG.debug("Creating user with username {}", user.getUsername());
 		userService.createUser(user, PlansEnum.PRO, userRoles);
 		LOG.info("User {} created", user.getUsername());
 	}
