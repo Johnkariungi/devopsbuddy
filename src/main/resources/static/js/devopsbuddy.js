@@ -17,7 +17,7 @@ function main() {
     });
     
     /* Contact form validation */
-    $( "contactForm" ).validate( {
+   /* $( "contactForm" ).validate( {
     		rules: {
     			email:
     				required: true,
@@ -62,10 +62,10 @@ function main() {
 			unhighlight: function (element, errorClass, validClass) {
 				$( element ).parents( ".col-sm-5" ).addClass( "has-success" ).removeClass( "has-error" );
 			}
-    } );
+    } );*/
     
     
-    /*$('#contactForm').formValidation({
+    $('#contactForm').formValidation({
         framework: 'bootstrap',
         icon: {
             valid: 'glyphicon glyphicon-ok',
