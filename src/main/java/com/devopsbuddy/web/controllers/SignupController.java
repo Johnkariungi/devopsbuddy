@@ -112,52 +112,53 @@ public class SignupController {
     		LOG.debug("Transforming user payload into User domain object.");
     		User user = UserUtils.fromWebUserToDomainUser(payload);
     		
-    		// Stores the profile image on Amazon s3 and stores the URL in the users record
-    		if (file != null && !file.isEmpty()) {
-    			
-    			String profileImageUrl = null;
-    			if (profileImageUrl != null) {
-    				user.setProfileImageUrl(profileImageUrl);
-    			} else {
-    				LOG.warn("There was a problem uploading the profile image to S3. The user's profile will" + 
-    						" be created without the image");
-    			}
-    		}
+    		// Stores the profile image on Amazon S3 and stores the URL in the user's record
+            if (file != null && !file.isEmpty()) {
+
+                String profileImageUrl = null;//s3Service.storeProfileImage(file, payload.getUsername());
+                if (profileImageUrl != null) {
+                    user.setProfileImageUrl(profileImageUrl);
+                } else {
+                    LOG.warn("There was a problem uploading the profile image to S3. The user's profile will" +
+                            " be created without the image");
+                }
+
+            }
     		
     		// Sets the Plan and Roles (depending on the chosen plan)
-    		LOG.debug("Retriving plan from the database.");
-    		Plan selectPlan = planService.findPlanById(planId);
-    		if (null == selectPlan) {
-    			LOG.error("The plan id {} could not be found. Throwing exception.", planId);
-    			model.addAttribute(SIGNED_UP_MESSAGE_KEY, false);
-    			model.addAttribute(ERROR_MESSAGE_KEY, "Plan not found.");
-    			return SUBSCRIPTION_VIEW_NAME;
-    		}
-    		user.setPlan(selectPlan); /**set plan in user entity*/
+        LOG.debug("Retrieving plan from the database");
+        Plan selectedPlan = planService.findPlanById(planId);
+        if (null == selectedPlan) {
+            LOG.error("The plan id {} could not be found. Throwing exception.", planId);
+            model.addAttribute(SIGNED_UP_MESSAGE_KEY, "false");
+            model.addAttribute(ERROR_MESSAGE_KEY, "Plan id not found");
+            return SUBSCRIPTION_VIEW_NAME;
+        }
+        user.setPlan(selectedPlan); /**set plan in user entity*/
     		
-    		User registeredUser = null;
-    		
-    		// By default users get the BASIC ROLE
-    		Set<UserRole> roles = new HashSet<>();
-    		if (planId == PlansEnum.BASIC.getId()) {
-    			roles.add(new UserRole(user, new Role(RolesEnum.BASIC)));
-    			registeredUser = userService.createUser(user, PlansEnum.BASIC, roles);
-    		} else {
-    			roles.add(new UserRole(user, new Role(RolesEnum.PRO)));
+        User registeredUser = null;
+
+        // By default users get the BASIC ROLE
+        Set<UserRole> roles = new HashSet<>();
+        if (planId == PlansEnum.BASIC.getId()) {
+            roles.add(new UserRole(user, new Role(RolesEnum.BASIC)));
+            registeredUser = userService.createUser(user, PlansEnum.BASIC, roles);
+        } else {
+            roles.add(new UserRole(user, new Role(RolesEnum.PRO)));
     			registeredUser = userService.createUser(user, PlansEnum.PRO, roles);
     			LOG.debug(payload.toString());
     		}
     		
-    		// Auto logins the registered user
-    		Authentication auth = new UsernamePasswordAuthenticationToken(
-    				registeredUser, null, registeredUser.getAuthorities());
-    		SecurityContextHolder.getContext().setAuthentication(auth);
-    		
-    		LOG.info("User created successfully.");
-    		
-    		model.addAttribute(SIGNED_UP_MESSAGE_KEY, true);
-    			
-    		return SUBSCRIPTION_VIEW_NAME;
+        // Auto logins the registered user
+        Authentication auth = new UsernamePasswordAuthenticationToken(
+                registeredUser, null, registeredUser.getAuthorities());
+        SecurityContextHolder.getContext().setAuthentication(auth);
+
+        LOG.info("User created successfully");
+
+        model.addAttribute(SIGNED_UP_MESSAGE_KEY, "true");
+
+        return SUBSCRIPTION_VIEW_NAME;
     }
     
   //--------------> Private methods
