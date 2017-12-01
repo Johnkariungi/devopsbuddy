@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.devopsbuddy.backend.persistence.domain.backend.Plan;
 import com.devopsbuddy.backend.persistence.domain.backend.Role;
@@ -70,7 +71,8 @@ public class SignupController {
     }
     
     @RequestMapping(value = SIGNUP_URL_MAPPING, method = RequestMethod.POST)
-    public String signupPost(@RequestParam(name = "planId", required = true) int planId, 
+    public String signupPost(@RequestParam(name = "planId", required = true) int planId,
+    		@RequestParam(name = "file", required = false) MultipartFile file,
     		@ModelAttribute(PAYLOAD_MODEL_KEY_NAME) @Valid ProAccountPayload payload, 
     		ModelMap model) throws IOException {/** ProAccountPayload properties must match from the BasicAccountPayload pojo*/
     	
@@ -109,6 +111,18 @@ public class SignupController {
     		// plans and roles
     		LOG.debug("Transforming user payload into User domain object.");
     		User user = UserUtils.fromWebUserToDomainUser(payload);
+    		
+    		// Stores the profile image on Amazon s3 and stores the URL in the users record
+    		if (file != null && !file.isEmpty()) {
+    			
+    			String profileImageUrl = null;
+    			if (profileImageUrl != null) {
+    				user.setProfileImageUrl(profileImageUrl);
+    			} else {
+    				LOG.warn("There was a problem uploading the profile image to S3. The user's profile will" + 
+    						" be created without the image");
+    			}
+    		}
     		
     		// Sets the Plan and Roles (depending on the chosen plan)
     		LOG.debug("Retriving plan from the database.");
