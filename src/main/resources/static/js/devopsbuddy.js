@@ -105,7 +105,7 @@ function main() {
                 }
             }
         }
-    });*/
+    });
 
     /* Forgot password form validation */
     $('#forgotPasswordForm').formValidation({

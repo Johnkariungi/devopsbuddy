@@ -47,8 +47,7 @@ public class S3Service {
      * @return The URL of the uploaded image
      * @throws S3Exception If something goes wrong
      */
-    public String storeProfileImage(MultipartFile uploadedFile, String username) throws /*name from Amazon s3*/
-    			IOException {
+    public String storeProfileImage(MultipartFile uploadedFile, String username) {/*name from Amazon s3*/   		 
     	
     		String profileImageUrl = null;
     	
@@ -96,11 +95,12 @@ public class S3Service {
      * @throws S3Exception If the resource file does not exist
      */
     private String storeProfileImageToS3(File resource, String username) {
+    	
     		String resourceUrl = null;
     		
     		if (!resource.exists()) {
     			LOG.error("The file {} does not exist. Throwing an exception", resource.getAbsolutePath());
-    			throw new IllegalArgumentException("The file " + resource.getAbsolutePath() + " doesn't exist.");
+    			throw new S3Exception("The file " + resource.getAbsolutePath() + " doesn't exist.");
     		}
     		
     		String rootBucketUrl = this.ensureBucketExists(bucketName);
@@ -148,6 +148,7 @@ public class S3Service {
     		} catch (AmazonClientException ace) {
     			LOG.error("An error occurred while connecting to S3. Will not execute action" +
     					" for bucket: {}", bucketName, ace);
+    			throw new S3Exception(ace);
     		}
     		return bucketUrl;
     }
