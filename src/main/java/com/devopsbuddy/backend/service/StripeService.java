@@ -29,10 +29,11 @@ public class StripeService {
      * @throws com.devopsbuddy.exceptions.StripeException If an error occurred while interacting with Stripe
      */
 	public String createCustomer(Map<String, Object> tokenParams, Map<String, Object> customerParams) {
-		Stripe.apiKey = stripeKey;
-		
-		String stripeCustomerId = null;
-		try {
+
+        Stripe.apiKey = stripeKey;
+
+        String stripeCustomerId = null;
+        try {
             Token token = Token.create(tokenParams);
             customerParams.put("source", token.getId());
             Customer customer = Customer.create(customerParams);
