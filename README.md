@@ -1,7 +1,6 @@
 # Devops Maven Application Java 
 > Startup ready web sekeleton 
----
-'''
+
 * Java Spring Boot Application
 * Spring Security
 * Spring Data JPA
@@ -13,5 +12,5 @@
 * MySQL relational database
 * HTML5, Bootstrap and Thymleaf
 * Maven project
-'''
+
 
